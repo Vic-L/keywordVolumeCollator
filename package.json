@@ -1,0 +1,14 @@
+{
+  "name": "@vic-l/scripts",
+  "version": "1.0.0",
+  "description": "Collate csvs from competitors' website from Ahrefs to give keywords and their respective volumes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vic-l",
+  "license": "ISC",
+  "bin": {
+    "kvc": "./index.js"
+  }
+}
