@@ -9,7 +9,7 @@
   "author": "vic-l",
   "license": "ISC",
   "bin": {
-    "kvc": "./index.js"
+    "kvc": "bin/kvc"
   },
   "dependencies": {
     "fs": "0.0.1-security"
