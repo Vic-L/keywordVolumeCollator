@@ -12,6 +12,7 @@
     "kvc": "bin/kvc"
   },
   "dependencies": {
+    "fast-csv": "^3.0.1",
     "fs": "0.0.1-security"
   }
 }
