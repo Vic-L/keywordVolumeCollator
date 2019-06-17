@@ -51,10 +51,17 @@ module.exports = async () => {
   await Promise.all(promises);
 
   // sort
-  const keywordsArray = Object.keys(hash).map(keyword => ({
-    keyword,
-    volume: Number(hash[keyword]),
-  }));
+  const keywordsArray = orderBy(
+    Object.keys(hash).map(keyword => ({
+      keyword,
+      volume: Number(hash[keyword]),
+    })),
+    'volume',
+    'desc',
+  );
 
-  console.log(orderBy(keywordsArray, 'volume', 'desc'));
+
+  csv.writeToPath('output.csv', keywordsArray.map(hash => [hash.keyword, hash.volume]));
+
+  console.log("check output.csv in current working directory");
 }
