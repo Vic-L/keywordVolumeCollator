@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { pipeline } = require('stream');
 const csv = require('fast-csv');
+const orderBy = require('lodash.orderby');
 
 module.exports = async () => {
   const filePaths = process.argv.splice(2);
@@ -49,5 +50,11 @@ module.exports = async () => {
 
   await Promise.all(promises);
 
-  console.log(hash);
+  // sort
+  const keywordsArray = Object.keys(hash).map(keyword => ({
+    keyword,
+    volume: Number(hash[keyword]),
+  }));
+
+  console.log(orderBy(keywordsArray, 'volume', 'desc'));
 }
