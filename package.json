@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "fast-csv": "^3.0.1",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "lodash.orderby": "^4.6.0"
   }
 }
