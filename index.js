@@ -1,6 +1,8 @@
 const fs = require('fs');
+const { pipeline } = require('stream');
+const csv = require('fast-csv');
 
-module.exports = () => {
+module.exports = async () => {
   const filePaths = process.argv.splice(2);
 
   // check against empty argument
@@ -17,7 +19,35 @@ module.exports = () => {
       console.error(`File does not exist: ${path}`);
       process.exit();
     }
+  });
+
+  const promises = [];
+  const hash = {};
+
+  // parse all csv into Keyword and Volume array
+  filePaths.forEach((path) => {
+    promises.push(new Promise((resolve, reject) => {
+      fs.createReadStream(path, { encoding: 'utf16le' })
+          .pipe(csv.parse({
+          headers: true,
+          delimiter: '\t',
+        }))
+        .on('data', (row) => {
+          hash[row.Keyword] = row.Volume;
+        })
+        .on('error', (errorString) => {
+          console.error(`${path} is not valid csv file.\nError: ${errorString}`);
+          reject(`${path} is not valid csv file.\nError: ${errorString}`);
+          process.exit();
+        })
+        .on('end', () => {
+          resolve(`Complete handling ${path}`);
+        })
+      })
+    );
   })
 
-  console.log(filePaths);
+  await Promise.all(promises);
+
+  console.log(hash);
 }
