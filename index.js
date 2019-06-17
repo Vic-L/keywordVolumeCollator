@@ -60,8 +60,14 @@ module.exports = async () => {
     'desc',
   );
 
-
-  csv.writeToPath('output.csv', keywordsArray.map(hash => [hash.keyword, hash.volume]));
+  csv.writeToPath(
+    'output.csv', 
+    [['Keywords', 'Volume']].concat(
+      keywordsArray.map(
+        hash => [hash.keyword, hash.volume]
+      )
+    )
+  );
 
   console.log("check output.csv in current working directory");
 }
